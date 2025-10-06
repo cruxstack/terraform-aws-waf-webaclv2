@@ -72,6 +72,7 @@ module "waf" {
         ]
       }
     },
+
     {
       name     = "AWSManagedRulesKnownBadInputsRuleSet-rule-2"
       priority = "2"
@@ -87,6 +88,7 @@ module "waf" {
         vendor_name = "AWS"
       }
     },
+
     {
       name     = "AWSManagedRulesPHPRuleSet-rule-3"
       priority = "3"
@@ -104,6 +106,7 @@ module "waf" {
         vendor_name = "AWS"
       }
     },
+
     ### Byte Match Rule example
     # Refer to https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl#byte-match-statement
     # for all of the options available.
@@ -130,6 +133,7 @@ module "waf" {
         type                  = "NONE"
       }
     },
+
     ### Geo Match Rule example
     {
       name     = "GeoMatchRule-5"
@@ -147,6 +151,7 @@ module "waf" {
         country_codes = ["NL", "GB", "US"]
       }
     },
+
     ### IP Set Rule example
     {
       name     = "IpSetRule-6"
@@ -164,6 +169,7 @@ module "waf" {
         arn = "arn:aws:wafv2:eu-west-1:111122223333:regional/ipset/ip-set-test/a1bcdef2-1234-123a-abc0-1234a5bc67d8"
       }
     },
+
     ### IP Rate Based Rule example
     {
       name     = "IpRateBasedRule-7"
@@ -196,6 +202,7 @@ module "waf" {
         }
       }
     },
+
     ### NOT rule example (can be applied to byte_match, geo_match, and ip_set rules)
     {
       name     = "NotByteMatchRule-8"
@@ -221,6 +228,7 @@ module "waf" {
         }
       }
     },
+
     ### Regex Match Rule example
     {
       name     = "RegexMatchRule-9"
@@ -242,6 +250,7 @@ module "waf" {
           priority              = 0
           type                  = "NONE"
         }
+
     ### Attach Custom Rule Group example
     {
       name     = "CustomRuleGroup-1"
@@ -258,6 +267,7 @@ module "waf" {
       rule_group_reference_statement = {
         arn = "arn:aws:wafv2:eu-west-1:111122223333:regional/rulegroup/rulegroup-test/a1bcdef2-1234-123a-abc0-1234a5bc67d8"
       }
+
     ### Regex Match Rule example
     {
       name     = "RegexMatchRule-9"
@@ -279,6 +289,7 @@ module "waf" {
           priority              = 0
           type                  = "NONE"
         }
+
     ### Attach Custom Rule Group example
     {
       name     = "CustomRuleGroup-1"
@@ -296,6 +307,7 @@ module "waf" {
         arn = "arn:aws:wafv2:eu-west-1:111122223333:regional/rulegroup/rulegroup-test/a1bcdef2-1234-123a-abc0-1234a5bc67d8"
       }
     },
+
     ### Size constraint Rule example
     # Refer to https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl#size-constraint-statement
     # for all of the options available.
@@ -321,6 +333,7 @@ module "waf" {
         sampled_requests_enabled   = true
       }
     },
+
     ### Regex Pattern Set Reference Rule example
     # Refer to https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafv2_web_acl#regex-pattern-set-reference-statement
     # for all of the options available.
