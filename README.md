@@ -21,18 +21,12 @@ Supported WAF v2 components:
 
 ## Usage
 
-
 ```hcl
 module "waf" {
   source = "github.com/cruxstack/terraform-aws-waf-webaclv2?ref=v1.x.x"
 
-  name_prefix = "test-waf-setup"
-  alb_arn     = module.alb.arn
-
-  scope = "REGIONAL"
-
-  create_alb_association = true
-
+  name_prefix          = "test-waf-setup"
+  scope                = "REGIONAL"
   allow_default_action = true # set to allow if not specified
 
   visibility_config = {
@@ -366,22 +360,14 @@ module "waf" {
 }
 ```
 
-### Cloudfront configuration
+### WAFv2 for CloudFront
 
 ```hcl
-provider "aws" {
-  alias = "us-east"
-
-  version = ">= 4.44.0"
-  region  = "us-east-1"
-}
-
 module "waf" {
   source = "github.com/cruxstack/terraform-aws-waf-webaclv2?ref=v1.x.x"
 
   name_prefix = "test-waf-setup-cloudfront"
-  scope = "CLOUDFRONT"
-  create_alb_association = false
+  scope       = "CLOUDFRONT"
 
   // ...
 }
