@@ -138,9 +138,27 @@ resource "aws_wafv2_web_acl" "main" {
               for_each = length(lookup(managed_rule_group_statement.value, "managed_rule_group_configs", {})) == 0 ? [] : [lookup(managed_rule_group_statement.value, "managed_rule_group_configs", {})]
               content {
                 dynamic "aws_managed_rules_bot_control_rule_set" {
-                  for_each = length(lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", {})) == 0 ? [] : [lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", {})]
+                  for_each = lookup(managed_rule_group_statement.value, "name") == "AWSManagedRulesBotControlRuleSet" ? [lookup(managed_rule_group_configs.value, "aws_managed_rules_bot_control_rule_set", {})] : []
                   content {
                     inspection_level = lookup(aws_managed_rules_bot_control_rule_set.value, "inspection_level")
+                  }
+                }
+                dynamic "aws_managed_rules_anti_ddos_rule_set" {
+                  for_each = lookup(managed_rule_group_statement.value, "name") == "AWSManagedRulesAntiDDoSRuleSet" ? [lookup(managed_rule_group_configs.value, "aws_managed_rules_anti_ddos_rule_set", {})] : []
+                  content {
+                    client_side_action_config {
+                      challenge {
+                        dynamic "exempt_uri_regular_expression" {
+                          for_each = lookup(aws_managed_rules_anti_ddos_rule_set.value.client_side_action_config.challenge, "exempt_uri_regular_expression", [])
+                          content {
+                            regex_string = exempt_uri_regular_expression.value.regex_string
+                          }
+                        }
+                        sensitivity     = lookup(aws_managed_rules_anti_ddos_rule_set.value.client_side_action_config.challenge, "sensitivity")
+                        usage_of_action = lookup(aws_managed_rules_anti_ddos_rule_set.value.client_side_action_config.challenge, "usage_of_action")
+                      }
+                    }
+                    sensitivity_to_block = lookup(aws_managed_rules_anti_ddos_rule_set.value, "sensitivity_to_block")
                   }
                 }
               }
