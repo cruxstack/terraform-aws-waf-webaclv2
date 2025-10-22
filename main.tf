@@ -6991,7 +6991,7 @@ resource "aws_wafv2_web_acl_logging_configuration" "main" {
           requirement = lookup(filter.value, "requirement", "MEETS_ANY")
 
           dynamic "condition" {
-            for_each = length(lookup(filter.value, "condition", {})) == 0 ? [] : toset(lookup(filter.value, "condition"))
+            for_each = lookup(filter.value, "condition", [])
             content {
               dynamic "action_condition" {
                 for_each = length(lookup(condition.value, "action_condition", {})) == 0 ? [] : [lookup(condition.value, "action_condition", {})]
